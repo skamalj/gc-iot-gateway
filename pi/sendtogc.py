@@ -1,8 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
 import connect, parseargs
-broker = '192.168.1.8'
-port = 8883
 gw_client = ''
 local_client = ''
 mqtt_topic = ''
@@ -38,7 +36,7 @@ def create_local_client(client_name):
     client.tls_set(ca_certs=args.mosquitto_cacert_file, 
                 certfile=args.mosquitto_crt_file,keyfile=args.mosquitto_key_file)
     client.tls_insecure_set(True)
-    client.connect(broker, port)
+    client.connect(args.mosquitto_broker, args.mosquitto_port)
     client.subscribe(b"/home/sensor/+")
     return client
 
@@ -65,3 +63,5 @@ def main():
     gw_client.subscribe(device_config_topic, qos=0)
     gw_client.loop_start()
     local_client.loop_forever()
+
+main()

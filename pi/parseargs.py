@@ -84,7 +84,17 @@ def parse_command_line_args():
             '--mosquitto_cacert_file', 
             default='ca.crt', 
             required=False, 
-            help='CA certificate for local mqtt client')                                      
+            help='CA certificate for local mqtt client') 
+    parser.add_argument(
+            '--mosquitto_broker', 
+            default='192.168.1.9', 
+            required=False, 
+            help='Broker IP for local mqtt client') 
+    parser.add_argument(
+            '--mosquitto_port', 
+            default=8883, 
+            required=False, 
+            help='Port for local mqtt service')                                                              
     parser.add_argument(
             '--service_account_json',
             default=os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"),
