@@ -23,16 +23,20 @@ def on_message(client, userdata, message):
           " on topic " +
           message.topic.decode("utf-8")
           )
+    device_id = message.topic.decode("utf-8").split('/')[-1]
+    mqtt_topic = '/devices/{}/events/{}'.format(device_id,device_id)
     msg_payload =  str(message.payload.decode("utf-8"))  
     gw_client.publish(mqtt_topic,msg_payload,qos=1)
 
 
 def create_local_client(client_name):
+    args = parseargs.parse_command_line_args()
     client = mqtt.Client(client_name)
     client.on_message = on_message
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
-    client.tls_set(ca_certs='ca.crt', certfile='kamal.crt',keyfile='kamal.key')
+    client.tls_set(ca_certs=args.mosquitto_cacert_file, 
+                certfile=args.mosquitto_crt_file,keyfile=args.mosquitto_key_file)
     client.tls_insecure_set(True)
     client.connect(broker, port)
     client.subscribe(b"/home/sensor/+")

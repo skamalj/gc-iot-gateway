@@ -7,7 +7,7 @@ def parse_args():
             'Example Google Cloud IoT Core MQTT device connection code.'))
     parser.add_argument(
             '--mqtt_server',
-            default='192.168.1.8',
+            default='192.168.1.9',
             required=False,
             help='Local mqtt server to connect to')
     parser.add_argument(

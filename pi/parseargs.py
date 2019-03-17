@@ -71,6 +71,21 @@ def parse_command_line_args():
             required=False, 
             help='Cloud IoT Core registry id')
     parser.add_argument(
+            '--mosquitto_key_file', 
+            default='rasp-client.key', 
+            required=False, 
+            help='Key for local mqtt client')
+    parser.add_argument(
+            '--mosquitto_crt_file', 
+            default='rasp-client.crt', 
+            required=False, 
+            help='Certificate for local mqtt client')  
+    parser.add_argument(
+            '--mosquitto_cacert_file', 
+            default='ca.crt', 
+            required=False, 
+            help='CA certificate for local mqtt client')                                      
+    parser.add_argument(
             '--service_account_json',
             default=os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"),
             help='Path to service account json file.')
