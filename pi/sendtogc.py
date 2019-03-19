@@ -3,7 +3,6 @@ import time
 import gateway, parseargs
 gw_client = ''
 local_client = ''
-mqtt_topic = ''
 
 
 def on_connect(client, user_data, flags, rc):
@@ -15,7 +14,6 @@ def on_disconnect(client, user_data, rc):
 
 
 def on_message(client, userdata, message):
-    global mqtt_topic
     print("Local mqtt recieved temp reading =" +
           str(message.payload.decode("utf-8")) +
           " on topic " +
@@ -58,7 +56,6 @@ def main():
     args = parseargs.parse_command_line_args()
     gw_client = create_gw_client()
     local_client = create_local_client('mosquitto-client')
-    mqtt_topic = '/devices/{}/events/{}'.format(args.device_id,args.device_id)
     device_config_topic = '/devices/{}/config'.format(args.device_id)
     gw_client.subscribe(device_config_topic, qos=0)
     gw_client.loop_start()
