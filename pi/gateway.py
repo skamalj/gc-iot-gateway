@@ -2,13 +2,6 @@ import paho.mqtt.client as mqtt
 import ssl 
 import jwt
 import datetime
-import time
-import random
-import logging
-import ast
-
-mqtt.Client.connected_flag=False
-logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.CRITICAL)
 
 
 # [START iot_mqtt_jwt]
