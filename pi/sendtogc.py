@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
-import connect, parseargs
+import gateway, parseargs
 gw_client = ''
 local_client = ''
 mqtt_topic = ''
@@ -35,19 +35,19 @@ def create_local_client(client_name):
     client.on_disconnect = on_disconnect
     client.tls_set(ca_certs=args.mosquitto_cacert_file, 
                 certfile=args.mosquitto_crt_file,keyfile=args.mosquitto_key_file)
-    client.tls_insecure_set(True)
+    client.tls_insecure_set(False)
     client.connect(args.mosquitto_broker, args.mosquitto_port)
     client.subscribe(b"/home/sensor/+")
     return client
 
 def create_gw_client():
     args = parseargs.parse_command_line_args()
-    client = connect.get_client(
+    client = gateway.get_client(
                 args.project_id, args.cloud_region,
                 args.registry_id, args.gateway_id, args.private_key_file,
                 args.algorithm, args.ca_certs, args.mqtt_bridge_hostname,
                 args.mqtt_bridge_port)
-    connect.attach_device(client,args.device_id,'')    
+    gateway.attach_device(client,args.device_id,'')    
     time.sleep(15)        
     return client
 

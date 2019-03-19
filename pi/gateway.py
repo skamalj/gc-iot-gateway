@@ -10,17 +10,6 @@ import ast
 mqtt.Client.connected_flag=False
 logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.CRITICAL)
 
-# The initial backoff time after a disconnection occurs, in seconds.
-minimum_backoff_time = 1
-
-# The maximum backoff time before giving up, in seconds.
-MAXIMUM_BACKOFF_TIME = 32
-
-# Whether to wait with exponential backoff before publishing.
-should_backoff = False
-
-# CardId that was scanned for approval
-scanned_cardid = ''
 
 # [START iot_mqtt_jwt]
 def create_jwt(project_id, private_key_file, algorithm):
@@ -53,21 +42,11 @@ def error_str(rc):
 def on_connect(client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
     print('on_connect', mqtt.connack_string(rc))
-    # After a successful connect, reset backoff time and stop backing off.
-    global should_backoff
-    global minimum_backoff_time
-    should_backoff = False
-    minimum_backoff_time = 1
 
 
 def on_disconnect(unused_client, unused_userdata, rc):
     """Paho callback for when a device disconnects."""
     print('on_disconnect', error_str(rc))
-
-    # Since a disconnect occurred, the next loop iteration will wait with
-    # exponential backoff.
-    global should_backoff
-    should_backoff = True
 
 
 def on_publish(unused_client, unused_userdata, unused_mid):

@@ -67,7 +67,7 @@ def parse_command_line_args():
             help='CA certificate for local mqtt client') 
     parser.add_argument(
             '--mosquitto_broker', 
-            default='192.168.1.9', 
+            default='raspberrypi.local', 
             required=False, 
             help='Broker IP for local mqtt client') 
     parser.add_argument(
