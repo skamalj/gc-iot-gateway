@@ -52,7 +52,6 @@ def create_gw_client():
 def main():
     global gw_client
     global local_client
-    global mqtt_topic
     args = parseargs.parse_command_line_args()
     gw_client = create_gw_client()
     local_client = create_local_client('mosquitto-client')
